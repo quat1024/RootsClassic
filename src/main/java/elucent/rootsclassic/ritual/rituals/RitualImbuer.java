@@ -41,6 +41,11 @@ public class RitualImbuer extends SimpleRitualEffect {
   public boolean incenseMatches(List<ItemStack> incensesFromNearby, RitualRecipe<Void> recipe) {
     List<ItemStack> incensesWithoutPowders = new ArrayList<>(incensesFromNearby);
     incensesWithoutPowders.removeIf(stack -> stack.is(RootsRegistry.SPELL_POWDER.get()));
-    return RootsUtil.matchesIngredients(incensesWithoutPowders, recipe.getIncenses());
+    
+    if(incensesWithoutPowders.size() == incensesFromNearby.size()) {
+      return false; //Need to add at least one spell powder.
+    } else {
+      return RootsUtil.matchesIngredients(incensesWithoutPowders, recipe.getIncenses());
+    }
   }
 }
